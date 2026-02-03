@@ -43,9 +43,9 @@ binpow:
     ; --- Alinhamento e Preservação da Stack ---
     ; É preciso salvar registradores callee-saved (RBX, R12) para guardar a 'base' e o 'expoente' atuais durante a recursão.
 
-    push rbx                            ; Salva o RBX. Stack: desalinhada (16B totais desde call) ==> Alinhada 16
-    push r12                            ; Salva o R12. Stack: desalinhada 8
-    sub rsp, 8                          ; Padding para alinhar a 16 bytes antes da call
+    push rbx                            ; Salva o RBX. Stack: +8 bytes ==> 16 bytes (Alinhado)
+    push r12                            ; Salva o R12. Stack: +8 bytes ==> 24 bytes (Desalinhado, pois não é multiplo de 16)
+    sub rsp, 8                          ; Padding para alinhar o Stack: +8bytes ==> 32 bytes (Alinhado novamente!)
 
     ; Move argumentos para registradores preservados
     mov rbx, RDI                        ; RBX = base (preservado)
@@ -74,7 +74,6 @@ binpow:
         imul rax, rcx                   ; RAX = RAX * RCX
 
 .finish:
-    ; --- Epílogo ---
     add rsp, 8                          ; Desfaz o padding
     pop r12                             ; Restaura R12
     pop rbx                             ; Restaura RBX
@@ -91,6 +90,8 @@ main:
     push rbp
     mov rbp, rsp
 
+    ; O Stack deve estar alinhado em 16 bytes antes de qualquer CALL.
+
     ; --- Leitura de N ---
     ; fscanf(stdin, "%d", &N)
     mov rdi, [rel stdin]                ; Carrega ponteiro do aquivo stdin
@@ -99,8 +100,9 @@ main:
     mov rax, 0                          ; Sem argumentos de vetor (XMM)
     call fscanf
 
-    ; Como o R13D é callee-saved, usaremos como contador do loop (N)
-    push r13
+    ; --- Setup do Loop ---
+    push r13                            ; SAlva R13. RSP desce 8 bytes. (Desalinhou em 24 bytes)
+    sub rsp, 8                          ; Subtrai 8 bytes de RSP para alinhar o stack novamente (agora em 16 bytes)
     mov r13d, [rel N]                   ; R13D = N
 
 .loop_start:
@@ -138,7 +140,8 @@ main:
     jmp .loop_start
 
 .loop_end:
-    pop r13                             ; Restaurar contador
+    add rsp, 8                          ; Devolve os 8 bytes de padding
+    pop r13                             ; Restaurar contador R13
 
     mov rax, 0                          ; Return 0
     leave
