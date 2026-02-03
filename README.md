@@ -1,21 +1,32 @@
-# 🚀 Portfólio de Projetos - Trainee CoreTech (UFS)
+<div align="center">
 
-Este repositório documenta as atividades práticas desenvolvidas durante o processo de trainee da **CoreTech - Liga de Hardware e Robótica da Universidade Federal de Sergipe**. Os projetos abaixo demonstram a aplicação de conceitos fundamentais de Arquitetura de Computadores e Descrição de Hardware.
+# Trainee de Projetos | CoreTech
+
+![UFS](https://img.shields.io/badge/Universidade_Federal_de_Sergipe-UFS-005CA9?style=for-the-badge&logo=unacademy&logoColor=white)
+![CoreTech](https://img.shields.io/badge/Liga-Hardware_&_Robótica-orange?style=for-the-badge)
+
+*Este repositório documenta as atividades práticas desenvolvidas durante o processo de trainee da **CoreTech - Liga de Hardware e Robótica da Universidade Federal de Sergipe**.*
+
+Os projetos abaixo demonstram a aplicação de conceitos fundamentais de **Arquitetura de Computadores** e **Descrição de Hardware**.
+
+</div>
 
 ---
 
 ## 🛠️ Atividade 1: Exponenciação Binária em Assembly x86-64
 
-### Descrição do Desafio
+![Assembly](https://img.shields.io/badge/Assembly-x86--64-red?style=flat-square&logo=intel) ![Linux ABI](https://img.shields.io/badge/Linux-ABI_System_V-black?style=flat-square&logo=linux)
+
+### 📄 Descrição do Desafio
 Este projeto consiste na implementação do algoritmo de **Exponenciação Binária (Binary Exponentiation)** utilizando puramente linguagem **Assembly x86-64**.
 
-O código foi desenvolvido como parte do desafio técnico do **Trainee CoreTech**, com o objetivo de demonstrar domínio sobre a arquitetura de computadores, manipulação direta de memória e conformidade com a ABI do Linux.
+O código foi desenvolvido como parte do desafio técnico do **Trainee CoreTech**, com o objetivo de demonstrar o que foi aprendido sobre a arquitetura de computadores, manipulação direta de memória e conformidade com a ABI do Linux.
 
-### 🚀 Sobre o Algoritmo
+### 🧮 Sobre o Algoritmo
 
 A exponenciação binária (ou exponenciação por quadrados) é um método eficiente para calcular potências de um número. Diferente da abordagem ingênua que possui complexidade $O(N)$, este algoritmo reduz o número de multiplicações para $O(\log N)$ utilizando a representação binária do expoente.
 
-A lógica implementada segue a definição recursiva:
+**Definição Recursiva:**
 
 $$
 a^n = \begin{cases} 
@@ -25,14 +36,14 @@ a^n = \begin{cases}
 \end{cases}
 $$
 
-### 🛠️ Conceitos Técnicos Abordados
+### ⚙️ Conceitos Técnicos Abordados
 
-A implementação destaca os seguintes conceitos avançados de Assembly e Arquitetura de Computadores:
+A implementação destaca os seguintes conceitos avançados:
 
 * **Recursão em Assembly:** Gerenciamento manual do fluxo de execução e chamadas de função aninhadas.
 * **System V AMD64 ABI:** Estrita observância das convenções de chamada do Linux, incluindo:
-    * **Alinhamento da Stack:** Garantia de alinhamento de 16 bytes antes de chamadas `call` para compatibilidade com a `libc`.
-    * **Preservação de Registradores:** Uso correto de registradores *callee-saved* (como `RBX`, `R12`) para manter o estado entre chamadas recursivas.
+    * *Alinhamento da Stack:* Garantia de alinhamento de 16 bytes antes de chamadas `call` para compatibilidade com a `libc`.
+    * *Preservação de Registradores:* Uso correto de registradores *callee-saved* (como `RBX`, `R12`) para manter o estado entre chamadas recursivas.
 * **Integração com C (libc):** Uso das funções `fscanf` e `fprintf` para entrada e saída de dados formatados.
 * **Manipulação de Tipos:** Tratamento de extensão de sinal e zero (`movsx`, `movzx`) para operações entre tipos de tamanhos mistos (`int8_t`, `uint8_t` e `int64_t`).
 
@@ -40,30 +51,17 @@ A implementação destaca os seguintes conceitos avançados de Assembly e Arquit
 
 O programa lê um número $N$ de casos de teste, seguido por $N$ linhas contendo a base e o expoente no formato `base^expoente`.
 
-**Exemplo de Entrada:**
-```text
-5
--2^3
-0^2
--5^6
-3^6
--3^27
-```
-
-**Saída Esperada:**
-```text
--8
-0
-15625
-729
--7625597484987
-```
+| Exemplo de Entrada | Saída Esperada |
+| :--- | :--- |
+| `5` <br> `-2^3` <br> `0^2` <br> `-5^6` <br> `3^6` <br> `-3^27` | `-8` <br> `0` <br> `15625` <br> `729` <br> `-7625597484987` |
 
 ---
 
 ## ⚡ Atividade 2: Descrição de Hardware com Verilog (Multiplexador 2:1)
 
-### Descrição do Desafio
+![Verilog](https://img.shields.io/badge/Verilog-HDL-blue?style=flat-square&logo=c) ![FPGA](https://img.shields.io/badge/Hardware-Digital_Design-green?style=flat-square)
+
+### 📄 Descrição do Desafio
 O desafio consistiu em projetar um **Multiplexador (MUX) 2:1** utilizando a linguagem de descrição de hardware **Verilog**. O objetivo principal foi demonstrar a compreensão dos três níveis de abstração no design digital: **Comportamental**, **RTL** e **Portas Lógicas**.
 
 ### 1. Nível Comportamental (Behavioral Level)
